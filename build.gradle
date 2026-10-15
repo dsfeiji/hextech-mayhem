@@ -1,0 +1,67 @@
+plugins {
+	id 'net.fabricmc.fabric-loom-remap' version "${loom_version}"
+}
+
+repositories {
+	// ModernUI 及其依赖
+	exclusiveContent {
+		forRepository { mavenCentral() }
+		filter {
+			includeGroup 'dev.icyllis'
+			includeGroup 'com.ibm.icu'
+			includeGroup 'org.commonmark'
+			includeGroup 'it.unimi.dsi'
+		}
+	}
+	exclusiveContent {
+		forRepository { maven { url 'https://maven.izzel.io/releases/' } }
+		filter { includeGroup 'icyllis.modernui' }
+	}
+	exclusiveContent {
+		forRepository { maven { url 'https://raw.githubusercontent.com/Fuzss/modresources/main/maven/' } }
+		filter { includeGroup 'fuzs.forgeconfigapiport' }
+	}
+}
+
+loom {
+	splitEnvironmentSourceSets()
+
+	mods {
+		"hexmayhem" {
+			sourceSet sourceSets.main
+			sourceSet sourceSets.client
+		}
+	}
+}
+
+dependencies {
+	minecraft "com.mojang:minecraft:${project.minecraft_version}"
+	mappings loom.officialMojangMappings()
+	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
+	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_api_version}"
+
+	// 客户端界面：ModernUI（未安装时回退到原版界面）
+	modClientImplementation 'fuzs.forgeconfigapiport:forgeconfigapiport-fabric:21.0.8'
+	modClientImplementation 'icyllis.modernui:ModernUI-Fabric:1.21.1-3.13.0.1'
+	clientImplementation 'dev.icyllis:modernui-core:3.13.0'
+	clientImplementation 'icyllis.modernui:ModernUI-Markflow:3.13.0'
+}
+
+processResources {
+	def version = project.version
+	inputs.property "version", version
+
+	filesMatching("fabric.mod.json") {
+		expand "version": version
+	}
+}
+
+tasks.withType(JavaCompile).configureEach {
+	it.options.release = 21
+	it.options.encoding = 'UTF-8'
+}
+
+java {
+	sourceCompatibility = JavaVersion.VERSION_21
+	targetCompatibility = JavaVersion.VERSION_21
+}

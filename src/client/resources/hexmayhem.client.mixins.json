@@ -1,0 +1,14 @@
+{
+	"required": true,
+	"package": "com.hexmayhem.client.mixin",
+	"compatibilityLevel": "JAVA_21",
+	"client": [
+		"ChatComponentMixin",
+		"EntityRendererMixin",
+		"GuiMixin",
+		"TabOverlayMixin"
+	],
+	"injectors": {
+		"defaultRequire": 1
+	}
+}

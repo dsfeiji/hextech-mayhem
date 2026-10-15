@@ -1,0 +1,27 @@
+{
+	"schemaVersion": 1,
+	"id": "hexmayhem",
+	"version": "${version}",
+	"name": "海克斯大乱斗",
+	"description": "我的世界版海克斯大乱斗：战士、坦克、弓箭手，三选一海克斯强化。",
+	"authors": [],
+	"license": "All-Rights-Reserved",
+	"environment": "*",
+	"entrypoints": {
+		"main": ["com.hexmayhem.HexMayhem"],
+		"client": ["com.hexmayhem.client.HexMayhemClient"]
+	},
+	"mixins": [
+		"hexmayhem.mixins.json",
+		{ "config": "hexmayhem.client.mixins.json", "environment": "client" }
+	],
+	"recommends": {
+		"modernui": "*"
+	},
+	"depends": {
+		"fabricloader": ">=0.15.0",
+		"minecraft": "~1.21",
+		"java": ">=21",
+		"fabric-api": "*"
+	}
+}
